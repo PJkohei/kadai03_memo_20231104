@@ -20,7 +20,7 @@
  <input id="title" type="text" placeholder="タイトル入力"><br>
  <textarea name="memopad" id="text" cols="30" rows="10" placeholder="1日の出来事"></textarea>
  <form>
-    <input type="file" id="imageInput" accept="image/*" />
+    <input type="file" id="imageInput" accept="image/*" onchange="previewFile()"/>
   </form>
 <div class="botton-area">
     <button id="save">セーブ</button>
@@ -56,6 +56,9 @@
             <span>${image}</span>
         </li>`;    
 
+        $("#displayMemo").append(html);
+        $("#imageContainer").append(html);
+
         //入力しやすくするために
      $('#title').val('');
      $('#text').val('');
@@ -82,6 +85,29 @@ for (let i= 0; i < localStorage.length; i++){
     <p>${value}</p>
     <span>${image}</span>
   </li>`;
+
+  function previewFile() {
+  const preview = document.querySelector("img");
+  const file = document.querySelector("input[type=file]").files[0];
+  const reader = new FileReader();
+
+  reader.addEventListener(
+    "load",
+    () => {
+      // 画像ファイルを base64 文字列に変換します
+      preview.src = reader.result;
+    },
+    false,
+  );
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+}
+
+
+
+
 
   $("#list").append(html);
  }
